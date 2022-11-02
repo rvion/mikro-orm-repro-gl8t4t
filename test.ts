@@ -23,11 +23,12 @@ beforeAll(async () => {
     type: 'sqlite',
     dbName: ':memory:',
     entities: [User, Item],
+    debug: ['query', 'query-params'],
   });
   await orm.schema.refreshDatabase();
   await orm.em.nativeInsert(User, { id: 1, name: 'user1' });
-  await orm.em.nativeInsert(Item, { id: 1 });
-  await orm.em.nativeInsert(Item, { id: 2 });
+  await orm.em.nativeInsert(Item, { id: 1, user: 1 });
+  await orm.em.nativeInsert(Item, { id: 2, user: 1 });
 });
 
 afterAll(async () => {
@@ -36,5 +37,22 @@ afterAll(async () => {
 
 test('test1', async () => {
   expect('foo').toBe('foo');
+  const em =  orm.em.fork()
+  const ItemRepo = em.getRepository(Item)
+  const UserRepo = em.getRepository(User)
+  expect(await ItemRepo.count()).toBe(2)
+  expect(await UserRepo.count()).toBe(1)
+  console.log('🟢 ----------------------- ')
+
+  // NO PERSIST
+  // NO FLUSH
+  ItemRepo.create({user: 1, id: 3 })
+
+  // 🔴 | the `find` triggers an insert:
+  // 🔴 | insert into `item` (`id`, `user_id`) values (3, 1) returning `id`
+  await UserRepo.find(1,{populate: ['items']})
+
+
+
   // console.log(orm);
 });
