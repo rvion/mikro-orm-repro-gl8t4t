@@ -1,0 +1,22 @@
+{
+  "name": "node-starter",
+  "version": "0.0.0",
+  "dependencies": {
+    "@mikro-orm/core": "next",
+    "@mikro-orm/sqlite": "next"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.0.0",
+    "@types/node": "^18.7.14",
+    "jest": "latest",
+    "ts-jest": "latest",
+    "ts-node": "latest",
+    "typescript": "latest"
+  },
+  "scripts": {
+    "test": "jest"
+  },
+  "jest": {
+    "preset": "ts-jest"
+  }
+}
