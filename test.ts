@@ -52,6 +52,7 @@ test('test1', async () => {
   // 🔴 | insert into `item` (`id`, `user_id`) values (3, 1) returning `id`
   await UserRepo.find(1,{populate: ['items']})
 
+  expect (await ItemRepo.count()).toBe(2)
 
 
   // console.log(orm);
