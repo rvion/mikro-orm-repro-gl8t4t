@@ -24,6 +24,7 @@ beforeAll(async () => {
     dbName: ':memory:',
     entities: [User, Item],
     debug: ['query', 'query-params'],
+    persistOnCreate: true
   });
   await orm.schema.refreshDatabase();
   await orm.em.nativeInsert(User, { id: 1, name: 'user1' });
