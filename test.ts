@@ -44,7 +44,7 @@ test('test1', async () => {
 
   expect(await ItemRepo.count()).toBe(2)
 
-  ItemRepo.create({user: 1, id: 3 }) // NO PERSIST, NO FLUSH
+  ItemRepo.create({user: 1, id: 3 }) // NO FLUSH
 
   // 🔴 the `find` triggers an insert:
   // |[query] select `u0`.* from `user` as `u0` where `u0`.`id` = 1 [took 0 ms]
